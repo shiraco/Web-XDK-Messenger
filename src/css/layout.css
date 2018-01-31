@@ -1,0 +1,36 @@
+/* Main Layout */
+.left-panel,
+.right-panel {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+}
+.left-panel {
+  flex: 0 0 25%;
+  max-width: 420px;
+  min-width: 320px;
+}
+.left-panel layer-conversation-list {
+  flex-grow: 1;
+}
+.right-panel {
+  border-left: 1px solid rgba(0,0,0,0.3);
+  flex: 3;
+}
+
+.is-mobile .left-panel {
+  flex: 1;
+}
+
+.is-mobile .right-panel {
+  flex: 1;
+}
+
+.has-conversation.is-mobile .left-panel {
+  display: none;
+}
+
+.is-mobile:not(.has-conversation) .right-panel {
+  display: none;
+}

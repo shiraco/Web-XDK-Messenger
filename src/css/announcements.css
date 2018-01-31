@@ -1,0 +1,76 @@
+
+.unread-announcements .fa {
+  color: red;
+}
+
+.announcement-list, layer-identity-list {
+  overflow-y: auto;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  height: 500px; /* ignored; here to workaround flexbox bug */
+}
+
+
+.no-announcements-message {
+  text-align: center;
+  padding-top: 20px;
+}
+
+
+.announcement-item {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  border-bottom: solid 1px #ccc;
+  cursor: pointer;
+}
+
+.announcement-item:last-child {
+  border-bottom: solid 1px transparent;
+}
+
+.announcement-item.is-unread {
+  font-weight: bold;
+}
+
+.announcement-item.is-read {
+  color: #666;
+}
+
+.announcement-item .unread-bullet {
+  width: 20px;
+  line-height: 38px;
+  text-indent: 14px;
+}
+
+
+.announcement-item .name {
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.announcement-item .name {
+  width: 120px;
+}
+
+.announcement-item .announcement-parts {
+  padding: 10px 20px;
+  width: 100px;  /* flexbox workaround */
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+
+.announcement-item .announcement-parts.closed .text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.announcement-item .timestamp {
+  width: 100px;
+  color: rgba(0,0,0,0.4);
+  font-size: 12px;
+  text-align: right;
+  padding: 10px 20px;
+}
