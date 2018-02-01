@@ -199,6 +199,23 @@ class Messenger extends Component {
   }
 
   /**
+   * When user clicks on a Toast or Desktop notification, update the selected Conversation
+   */
+  onNotificationClick = (event) => {
+    this.props.history.push(`/conversations/${uuid(event.detail.item.conversationId)}`)
+  }
+
+  /**
+   * When a new message arrives, notifiy the user if the Window/tab is in the background,
+   * or the ConversationView is showing a different Conversation.
+   */
+  onMessageNotification = (event) => {
+    if (event.detail.item.conversationId === this.state.conversationId && !event.detail.isBackground) {
+      event.preventDefault();
+    }
+  }
+
+  /**
    * Typically the title of a Conversation is stored in `conversation.metadata.converstationName.
    * However, if there is no name, just render a list of participants as the name.
    */
@@ -330,6 +347,10 @@ class Messenger extends Component {
     if (isMobile) rootClasses += ' is-mobile';
 
     return <div className={rootClasses}>
+      <Notifier
+        notifyInForeground="toast"
+        onMessageNotification={this.onMessageNotification}
+        onNotificationClick={this.onNotificationClick} />
       {this.state.showEditConversationDialog ? this.renderDialog() : null}
       {this.renderLeftPanel()}
       {this.renderRightPanel()}
