@@ -1,10 +1,25 @@
+/**
+ * Dialog for Creating or Editing a Conversation.
+ *
+ * * Select a title for the Conversation (optional)
+ * * Select participants for the Conversation
+ */
 import React, { Component } from 'react'
 import { LayerReactComponents, layerClient } from '../../get-layer';
 
 const { IdentityList } = LayerReactComponents;
 
 class CreateConversationDialog extends Component {
+
+  /**
+   * User has clicked the Save button; save the new conversation or perform updates upon an existing Conversation.
+   */
   onSave = () => {
+
+    // Abort if no changes
+    if (!this.state.isDirty) return this.onClose();
+
+    // Update the existing Conversation
     if (this.props.conversationId) {
       const conversation = layerClient.getConversation(this.props.conversationId);
       if (conversation) {
@@ -12,7 +27,10 @@ class CreateConversationDialog extends Component {
         conversation.setMetadataProperties({ conversationName: this.state.conversationName });
         if (this.props.onSave) this.props.onSave(conversation);
       }
-    } else if (this.state.selectedIdentities.length) {
+    }
+
+    // Create a new Conversation
+    else {
       const conversation = layerClient.createConversation({
         participants: this.state.selectedIdentities,
         distinct: this.state.selectedIdentities.length === 1,
@@ -24,47 +42,68 @@ class CreateConversationDialog extends Component {
     }
   }
 
+  /**
+   * This Component is recreated each time its used. If its being recreated to operate upon a Conversation,
+   * insure that we have that Conversation loaded and that its properly setup.
+   */
   componentWillMount() {
     const conversation = this.props.conversationId ? layerClient.getConversation(this.props.conversationId) : null;
     if (conversation && conversation.isLoading) {
-      conversation.once('conversations:loaded', () => {
-        this.setState({
-          selectedIdentities: conversation ? conversation.participants : [],
-        });
-      }, this);
+      conversation.once('conversations:loaded', () => this.initConversation(conversation), this);
     } else {
-      this.setState({
-        selectedIdentities: conversation ? conversation.participants : [],
-      });
+      this.initConversation(conversation);
     }
   }
 
   /**
-   * Extract the Identity object before forwarding the callback up to the parent.
+   * Setup our conversation -- or if we are creating a new Conversation, setup our initial state.
+   */
+  initConversation(conversation) {
+    this.setState({
+      selectedIdentities: conversation ? conversation.participants : [],
+      initialIdentities:  conversation ? conversation.participants : [],
+      initialTitle:  conversation ? conversation.metadata.conversationName || '' : '',
+      isDirty: false
+    });
+  }
+
+  /**
+   * Hack to determine if the user has made changes to the Conversation that should be saved.
+   */
+  isDirty(name, identities) {
+    return name !== this.state.initialTitle || identities.map(obj => obj.id).sort().join(',') !== this.state.initialIdentities.map(obj => obj.id).sort().join(',');
+  }
+
+  /**
+   * Update the set of selected Identies and the isDirty flag after each selection change event.
    */
   onSelectionChange = (event) => {
-    this.setState({ selectedIdentities: event.target.selectedIdentities });
+    this.setState({
+      selectedIdentities: event.target.selectedIdentities,
+      isDirty: this.isDirty(this.state.conversationName, event.target.selectedIdentities)
+    });
   }
 
   /**
-   * Extract the identity object before forwarding the callback up to the parent.
+   * Update the Conversation Name and isDirty flag after any changes to the title
    */
-  onIdentityDeselected = (event) => {
-    const identity = event.detail.item.toObject();
-    if (this.props.onIdentitySelected) this.props.onIdentityDeselected(identity);
-  }
-
   updateName = (event) => {
     const conversationName = event.target.value;
-    this.setState({ conversationName });
-  }
-
-  onClose = (event) => {
-    if (event.target.classList.contains('dialog')) this.props.onCancel();
+    this.setState({
+      conversationName,
+      isDirty: this.isDirty(conversationName, this.state.selectedIdentities)
+   });
   }
 
   /**
-   * Render the Identity List Dialog
+   * Close the dialog if the user clicked on the background of the dialog, or if anyone has called `this.onClose()`
+   */
+  onClose = (event) => {
+    if (!event || event.target.classList.contains('dialog')) this.props.onCancel();
+  }
+
+  /**
+   * Render the Edit Conversation Dialog
    */
   render() {
     const { selectedIdentities } = this.state;
@@ -72,23 +111,23 @@ class CreateConversationDialog extends Component {
     const conversation = this.props.conversationId ? layerClient.getConversation(this.props.conversationId) : null;
 
     return (
-      <div onClick={this.onClose} className="dialog">
+      <div onClick={this.onClose} className={"dialog " + (this.state.isDirty ? ' dialog-dirty' : '')} >
         <div className="participant-list-container dialog-container">
-          <div className="panel-header">
-            <span className="title">{conversation ? 'Select Participants' : 'Update Participants'}</span>
-          </div>
-          <IdentityList
-            onIdentitySelectionComplete={this.onSelectionChange}
-            selectedIdentities={selectedIdentities}
-          />
-          <div className="button-panel">
+          <div className="conversation-values">
             <input
               defaultValue={conversation ? conversation.metadata.conversationName : ''}
               onKeyDown={() => setTimeout(() => this.updateName, 1)}
               onChange={this.updateName}
               placeholder='Conversation title...' />
-            <button onClick={this.onSave} className="button-ok">OK</button>
+              <a href='#' onClick={this.onSave}>
+                <i className='icon fa fa-check-square'></i>
+              </a>
           </div>
+          <div className="panel-section-header">PARTICIPANTS</div>
+          <IdentityList
+            onIdentitySelectionComplete={this.onSelectionChange}
+            selectedIdentities={selectedIdentities}
+          />
         </div>
       </div>
     );

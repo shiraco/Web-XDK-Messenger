@@ -21,7 +21,6 @@ import '@layerhq/web-xdk/lib/ui/components/layer-notifier';
 import '@layerhq/web-xdk/lib/ui/components/layer-conversation-list';
 import '@layerhq/web-xdk/lib/ui/components/layer-identity-list';
 
-debugger;
 
 // initialize Layer Client with your appID
 const layerClient = Layer.init({

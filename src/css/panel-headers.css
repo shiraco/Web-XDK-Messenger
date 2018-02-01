@@ -1,0 +1,54 @@
+
+.panel-header {
+  background-color: #ebebeb;
+  box-sizing: border-box;
+  border: 1px solid #E4E9EC;
+  display: -webkit-flex;
+  display: flex;
+  min-height: 50px;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  padding: 8px;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.panel-header .title {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  text-align: center;
+}
+.panel-header a {
+  color: rgba(0,0,0,0.5);
+}
+.panel-header .icon {
+  cursor: pointer;
+  font-size: 18px;
+  padding: 6px 4px 4px 6px;
+  margin-left: 6px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 6px;
+}
+.conversations-header {
+  color: rgb(255, 255, 255);
+  padding: 8px 8x 8px 0px;
+  background-color: rgb(25, 165, 228);
+  text-align: left;
+  text-transform: uppercase;
+}
+.conversations-header .title {
+  text-align: left;
+}
+.conversation-header .icon {
+  color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.5);
+}
+
+
+.conversations-header layer-presence {
+  margin-right: 10px;
+}
+
+.conversations-header .logout {
+  margin-right: 8px;
+}

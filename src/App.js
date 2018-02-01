@@ -1,8 +1,13 @@
+/**
+ * Root level of the React application.
+ *
+ * For a typical application, this would contain access to a lot of your own UI components, one or more of which might contain Layer XDK Components.
+ */
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Login from './components/Login'
 import Messenger from './components/Messenger'
-import '../node_modules/@layerhq/web-xdk/themes/build/layer-basic-blue.css'
+import '@layerhq/web-xdk/themes/build/layer-basic-blue.css'
 
 class App extends Component {
   render() {

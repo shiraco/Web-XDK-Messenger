@@ -65,6 +65,32 @@
   align-items: stretch;
 }
 
+
+.dialog .conversation-values {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.dialog .conversation-values input {
+  flex-grow: 1;
+  width: 100px; /* flexbox workaround */
+  text-align: center;
+  font-size: 18px;
+  line-height: 24px;
+  margin: 10px;
+  border-width: 0px;
+}
+
+.dialog .conversation-values i {
+  margin-right: 10px;
+  font-size: 36px;
+  color: rgba(0,0,0,0.5);
+}
+
+.dialog-dirty.dialog .conversation-values i {
+  color: rgb(25, 165, 228);
+}
+
 .dialog .button-panel {
   background-color: rgba(100, 100, 100, 0.6);
   height: 40px;
@@ -98,4 +124,15 @@
 
 .dialog .button-panel input::placeholder {
   color: white;
+}
+
+.dialog layer-identity-list {
+  flex-grow: 1;
+  height: 100px; /* Flexbox workaround */
+}
+
+.panel-section-header {
+  font-size: 16px;
+  padding: 8px 12px;
+  background-color: #ebebeb;
 }

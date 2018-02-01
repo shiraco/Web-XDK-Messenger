@@ -34,3 +34,14 @@
 .is-mobile:not(.has-conversation) .right-panel {
   display: none;
 }
+
+layer-conversation-list {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+
+layer-conversation-view {
+  height: 100px;  /* Flexbox workaround */
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}

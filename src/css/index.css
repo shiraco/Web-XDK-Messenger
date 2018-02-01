@@ -1,3 +1,8 @@
+@import 'layout.css';
+@import 'panel-headers.css';
+@import 'dialog.css';
+@import 'widgets.css';
+
 html,
 body,
 body > * {
@@ -39,24 +44,3 @@ body {
 }
 
 
-layer-conversation-view {
-  height: 100px;  /* Flexbox workaround */
-  -webkit-flex-grow: 1;
-  flex-grow: 1;
-}
-
-
-
-.layer-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  margin-left: -200px;
-  margin-top: -200px;
-  opacity: 0.1;
-}
-
-.conversations-header layer-presence {
-  margin-right: 10px;
-}
