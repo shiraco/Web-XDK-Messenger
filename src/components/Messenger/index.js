@@ -266,12 +266,17 @@ class Messenger extends Component {
           <SendButton />
           <FileUploadButton multiple="true" />
           <MenuButton
-          item={this.state.conversation}
-          getMenuOptions={getMenuOptions}
+          getMenuOptions={this.generateMenu.bind(this)}
           />
         </div>);
       },
     };
+  }
+
+  generateMenu() {
+    if (this.state.conversation) {
+      return getMenuOptions(this.state.conversation);
+    }
   }
 
   /**

@@ -1,9 +1,9 @@
 {
   "name": "web-xdk-messenger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "@layerhq/web-xdk": "^1.0.0-pre2",
+    "@layerhq/web-xdk": "^1.0.0-pre2.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
