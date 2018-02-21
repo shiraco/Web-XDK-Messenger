@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
@@ -7,7 +8,10 @@ import reauthenticateLastUser from './reauthenticate';
 import mobileFixes from './mobile-fixes';
 
 reauthenticateLastUser();
-ReactDOM.render(<App />, document.getElementById('root'));
+const rootEl = document.querySelector('root')
+if (!(rootEl instanceof Element)) {
+  throw new Error('invalid type')
+}
+ReactDOM.render(<App />, rootEl)
 if (global.location.protocol === 'https:') registerServiceWorker();
 mobileFixes();
-

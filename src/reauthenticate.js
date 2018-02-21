@@ -1,3 +1,4 @@
+// @flow
 import { layerClient } from './get-layer';
 
 function reauthenticateLastUser() {

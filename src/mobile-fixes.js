@@ -1,3 +1,4 @@
+// @flow
 /**
  * Mobile browsers have annoying behaviors when trying to use all available screen real-estate without any up-down scrolling.
  * There are issues with the space the Location bar takes up, as well as issues with the nav buttons some phones have on the bottom.

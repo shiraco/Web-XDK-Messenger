@@ -1,6 +1,9 @@
-import React, { Component } from 'react'
+// @flow
+import React from 'react'
 import layer from '../../get-layer';
+// @flow-disable
 import config from '../../LayerConfiguration.json'
+// @flow-enable
 import './login_style.css'
 
 const layerClient = layer.layerClient
@@ -8,8 +11,16 @@ const Layer = layer.Layer
 
 window.googleMapsAPIKey = config[0].google_maps_key;
 
-class Login extends Component {
-  constructor (props) {
+type Props = {
+
+}
+
+type State = {
+
+}
+
+class Login extends React.Component<Props, State> {
+  constructor (props: Props) {
     super (props)
     this.state = {
       appId: config[0].app_id,

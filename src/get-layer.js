@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import * as React from 'react';
 import ReactDom from 'react-dom';
 
 import layerConfig from './LayerConfiguration.json';

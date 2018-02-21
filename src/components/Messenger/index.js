@@ -1,3 +1,4 @@
+// @flow
 /**
  * This UI Component manages the Layer Conversations.
  *
