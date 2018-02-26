@@ -1,6 +1,7 @@
+// @flow
 import { layerClient, LayerReactComponents, Layer } from '../../get-layer';
 
-function getMenuOptions(conversation) {
+function getMenuOptions(conversation: any) {
   return [
     {
       text: "Create Text Message",

@@ -21,10 +21,32 @@ const { uuid } = Layer.Utils;
 // Extract the Layer XDK UI Components that are to be used in this Project
 const { Notifier, ConversationList, ConversationView, SendButton, FileUploadButton, MenuButton, Presence } = LayerReactComponents;
 
-class Messenger extends Component {
-  constructor (props) {
+type Props = {
+  history: any,
+  location: any,
+  match: any
+}
+
+type State = {
+  conversation: any,
+  conversationName: string,
+  isLoaded: boolean,
+  conversationId: string,
+  showEditConversationDialog: boolean,
+  editConversationId: string
+}
+
+class Messenger extends Component<Props, State> {
+  constructor (props: Props) {
     super (props)
-    this.state = {};
+    this.state = {
+      conversationId: '',
+      conversation: null,
+      conversationName: '',
+      isLoaded: false,
+      showEditConversationDialog: false,
+      editConversationId: ''
+    };
   }
 
   /**
@@ -50,7 +72,7 @@ class Messenger extends Component {
     // If the Conversations Query has already fetched all conversations, then this will already be present.
     // Else getConversation(id, true) will fetch it from the server and trigger "conversations:loaded" event when complete.
     if (this.props.match.params.conversationId) {
-      this.conversation = layerClient.getConversation(this.props.match.params.conversationId, true);
+      this.state.conversation = layerClient.getConversation(this.props.match.params.conversationId, true);
       this.setupConversation();
     }
   }
@@ -63,7 +85,7 @@ class Messenger extends Component {
    * Note: This works off of `this.conversation` as its input, and this value may be `null`
    */
   setupConversation() {
-    const conversation = this.conversation;
+    const conversation = this.state.conversation;
 
     // If the conversation is still loading, wait for it to finish, and then set isLoaded to true
     if (conversation && conversation.isLoading) {
@@ -96,7 +118,7 @@ class Messenger extends Component {
    * Whenever a conversation is selected in the Conversation List, navigate to that Conversation.
    * This will cause `render` to be called, and the new Conversation ID to be passed to the Conversatin View.
    */
-  onConversationSelected (e) {
+  onConversationSelected (e: any) {
     if (!e.detail.item) return
     const conversation = e.detail.item.toObject()
     this.props.history.push(`/conversations/${uuid(conversation.id)}`)
@@ -118,12 +140,12 @@ class Messenger extends Component {
    * * Unsubscribe to all events from the prior conversation
    * * Call setupConversation() with the new conversation
    */
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps (props: Props) {
     if (this.props.match.params.conversationId !== props.match.params.conversationId) {
       const conversationId = props.match.params.conversationId;
       const newConversation = conversationId ? layerClient.getConversation(conversationId) : null;
-      if (this.conversation) this.conversation.off(null, null, this);
-      this.conversation = newConversation;
+      if (this.conversation) this.state.conversation.off(null, null, this);
+      this.state.conversation = newConversation;
       this.setupConversation();
     }
   }
@@ -135,7 +157,7 @@ class Messenger extends Component {
    * Note: this does not at this time filter them out of the Conversation List's Last Message.
    * Just return `false` to prevent a message from rendering.
    */
-  filterMessages (message) {
+  filterMessages (message: any) {
     return true;
 
     // Uncomment this to hide Response Messages sent by this user
@@ -145,7 +167,7 @@ class Messenger extends Component {
   /**
    * Toggle presence between BUSY and AVAILABLE
    */
-  togglePresence = (event) => {
+  togglePresence = (event: any) => {
     event.preventDefault();
     var nextStatus = layerClient.user.status === Layer.Core.Identity.STATUS.AVAILABLE ?
       Layer.Core.Identity.STATUS.BUSY : Layer.Core.Identity.STATUS.AVAILABLE
@@ -155,7 +177,7 @@ class Messenger extends Component {
   /**
    * Start creating a Conversation. Shows the EditConversationDialog.
    */
-  startCreateConversation = (event) => {
+  startCreateConversation = (event: any) => {
     event.preventDefault();
     this.setState({ showEditConversationDialog: true });
   }
@@ -163,7 +185,7 @@ class Messenger extends Component {
   /**
    * Start editing a Conversation. Shows the EditConversationDialog.
    */
-  startEditConversation = (event) => {
+  startEditConversation = (event: any) => {
     event.preventDefault();
     this.setState({
       showEditConversationDialog: true,
@@ -182,7 +204,7 @@ class Messenger extends Component {
    * Once the EditConversationDialog reports back that the Conversation has been created,
    * update our state and our URL
    */
-  onCreateConversation = (conversation) => {
+  onCreateConversation = (conversation: any) => {
     this.setState({
       conversationId: uuid(conversation.id),
       showEditConversationDialog: false,
@@ -202,7 +224,7 @@ class Messenger extends Component {
   /**
    * When user clicks on a Toast or Desktop notification, update the selected Conversation
    */
-  onNotificationClick = (event) => {
+  onNotificationClick = (event: any) => {
     this.props.history.push(`/conversations/${uuid(event.detail.item.conversationId)}`)
   }
 
@@ -210,7 +232,7 @@ class Messenger extends Component {
    * When a new message arrives, notifiy the user if the Window/tab is in the background,
    * or the ConversationView is showing a different Conversation.
    */
-  onMessageNotification = (event) => {
+  onMessageNotification = (event: any) => {
     if (event.detail.item.conversationId === this.state.conversationId && !event.detail.isBackground) {
       event.preventDefault();
     }

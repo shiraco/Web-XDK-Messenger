@@ -12,11 +12,20 @@ const Layer = layer.Layer
 window.googleMapsAPIKey = config[0].google_maps_key;
 
 type Props = {
-
+  history: any,
+  location: any
 }
 
 type State = {
-
+  nonce: string | null,
+  email: string | null,
+  userId: string | null,
+  password?: string | null,
+  appId: string | null,
+  identityProviderUrl?: string,
+  cb?: function,
+  waiting: boolean,
+  isTrusted: boolean
 }
 
 class Login extends React.Component<Props, State> {
@@ -29,7 +38,8 @@ class Login extends React.Component<Props, State> {
       email: null,
       password: null,
       nonce: null,
-      cb: null
+      waiting: false,
+      isTrusted: false
     }
   }
 
@@ -94,7 +104,7 @@ class Login extends React.Component<Props, State> {
       }
     }, (res) => {
       this.setState({ waiting: false });
-      if (res.success && res.data.identity_token) {
+      if (res.success && res.data.identity_token && this.state.cb) {
         this.state.cb(res.data.identity_token)
       } else {
         alert('Login failed; please check your user id and password');
@@ -102,12 +112,12 @@ class Login extends React.Component<Props, State> {
     });
   }
 
-  setTrustedState = (isTrusted) => {
+  setTrustedState = (isTrusted: boolean) => {
     layerClient.isTrustedDevice = isTrusted;
     this.setState({ isTrusted });
   }
 
-  handleKeyDown = (event) => {
+  handleKeyDown = (event: any) => {
     if (event.keyCode === 13 && !event.shiftKey) {
       this.getIdentityToken();
     }

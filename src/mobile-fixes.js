@@ -8,7 +8,7 @@ function mobileFixes() {
   const isMobile = navigator.userAgent.match(/android/i) || navigator.platform === 'iPhone' || navigator.platform === 'iPad';
   if (isMobile) {
     function onResize() {
-      document.body.style.height = window.innerHeight + 'px';
+      if (document.body) document.body.style.height = window.innerHeight + 'px';
     }
     window.addEventListener('resize', onResize);
     setTimeout(onResize, 10);

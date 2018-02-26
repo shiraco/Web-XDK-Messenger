@@ -1,15 +1,30 @@
+// @flow
 /**
  * Dialog for Creating or Editing a Conversation.
  *
  * * Select a title for the Conversation (optional)
  * * Select participants for the Conversation
  */
-import React, { Component } from 'react'
+import * as React from 'react'
 import { LayerReactComponents, layerClient } from '../../get-layer';
 
 const { IdentityList } = LayerReactComponents;
 
-class CreateConversationDialog extends Component {
+type Props = {
+  conversationId: string,
+  onSave: function,
+  onCancel: function
+}
+
+type State = {
+  selectedIdentities: any,
+  conversationName: any,
+  initialIdentities: any,
+  initialTitle: any,
+  isDirty: boolean
+}
+
+class CreateConversationDialog extends React.Component<Props, State> {
 
   /**
    * User has clicked the Save button; save the new conversation or perform updates upon an existing Conversation.
@@ -58,7 +73,7 @@ class CreateConversationDialog extends Component {
   /**
    * Setup our conversation -- or if we are creating a new Conversation, setup our initial state.
    */
-  initConversation(conversation) {
+  initConversation(conversation: any) {
     this.setState({
       selectedIdentities: conversation ? conversation.participants : [],
       initialIdentities:  conversation ? conversation.participants : [],
@@ -70,14 +85,14 @@ class CreateConversationDialog extends Component {
   /**
    * Hack to determine if the user has made changes to the Conversation that should be saved.
    */
-  isDirty(name, identities) {
+  isDirty(name: string, identities: any) {
     return name !== this.state.initialTitle || identities.map(obj => obj.id).sort().join(',') !== this.state.initialIdentities.map(obj => obj.id).sort().join(',');
   }
 
   /**
    * Update the set of selected Identies and the isDirty flag after each selection change event.
    */
-  onSelectionChange = (event) => {
+  onSelectionChange = (event: any) => {
     this.setState({
       selectedIdentities: event.target.selectedIdentities,
       isDirty: this.isDirty(this.state.conversationName, event.target.selectedIdentities)
@@ -87,7 +102,7 @@ class CreateConversationDialog extends Component {
   /**
    * Update the Conversation Name and isDirty flag after any changes to the title
    */
-  updateName = (event) => {
+  updateName = (event: any) => {
     const conversationName = event.target.value;
     this.setState({
       conversationName,
@@ -98,7 +113,7 @@ class CreateConversationDialog extends Component {
   /**
    * Close the dialog if the user clicked on the background of the dialog, or if anyone has called `this.onClose()`
    */
-  onClose = (event) => {
+  onClose = (event: any) => {
     if (!event || event.target.classList.contains('dialog')) this.props.onCancel();
   }
 
@@ -135,4 +150,3 @@ class CreateConversationDialog extends Component {
 }
 
 export default CreateConversationDialog;
-
