@@ -16,6 +16,10 @@ This JSON file contains an array of at least one:
 }]
 ```
 
+## Run flow
+
+1. `npm run flow` or `yarn flow`
+
 ## Running the Demo
 
 1. `npm install` OR `yarn install`
