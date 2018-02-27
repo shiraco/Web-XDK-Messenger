@@ -8,7 +8,7 @@ import reauthenticateLastUser from './reauthenticate';
 import mobileFixes from './mobile-fixes';
 
 reauthenticateLastUser();
-const rootEl = document.querySelector('root')
+const rootEl = document.getElementById('root')
 if (!(rootEl instanceof Element)) {
   throw new Error('invalid type')
 }

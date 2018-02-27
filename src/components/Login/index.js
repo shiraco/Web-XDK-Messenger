@@ -23,7 +23,7 @@ type State = {
   password?: string | null,
   appId: string | null,
   identityProviderUrl?: string,
-  cb?: function,
+  cb?: Function,
   waiting: boolean,
   isTrusted: boolean
 }

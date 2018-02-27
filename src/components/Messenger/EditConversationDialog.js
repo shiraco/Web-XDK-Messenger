@@ -12,8 +12,8 @@ const { IdentityList } = LayerReactComponents;
 
 type Props = {
   conversationId: string,
-  onSave: function,
-  onCancel: function
+  onSave: Function,
+  onCancel: Function
 }
 
 type State = {
