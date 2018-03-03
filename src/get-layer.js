@@ -11,7 +11,6 @@ import '@layerhq/web-xdk/ui/messages/choice/layer-choice-message-view';
 import '@layerhq/web-xdk/ui/messages/carousel/layer-carousel-message-view';
 import '@layerhq/web-xdk/ui/messages/buttons/layer-buttons-message-view';
 import '@layerhq/web-xdk/ui/messages/file/layer-file-message-view';
-import '@layerhq/web-xdk/ui/messages/link/layer-link-message-view';
 import '@layerhq/web-xdk/ui/messages/location/layer-location-message-view';
 import '@layerhq/web-xdk/ui/messages/product/layer-product-message-view';
 import '@layerhq/web-xdk/ui/messages/feedback/layer-feedback-message-view';

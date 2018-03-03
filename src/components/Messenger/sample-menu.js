@@ -11,7 +11,7 @@ function getMenuOptions(conversation) {
           title: 'The Holy Hand Grenade',
           author: 'King Arthur'
         });
-        model.generateMessage(conversation, message => message.send());
+        model.send({ conversation });
       },
     },
     {
@@ -24,7 +24,7 @@ function getMenuOptions(conversation) {
           imageUrl: "https://layer.com/wp-content/uploads/2017/07/bezier-blog-header-2x.png",
           description: "The Layer Conversation Design System helps you imagine and design the perfect customer conversation across devices."
         });
-        model.generateMessage(conversation, message => message.send());
+        model.send({ conversation });
       },
     },
     {
@@ -37,7 +37,7 @@ function getMenuOptions(conversation) {
           title: "Tis only a flesh wound",
           subtitle: "Your arm's off!"
         });
-        model.generateMessage(conversation, message => message.send())
+        model.send({ conversation });
       },
     },
     {
@@ -50,7 +50,7 @@ function getMenuOptions(conversation) {
           title: "Web XDK Readme",
           author: "layer.com"
         })
-        model.generateMessage(conversation, message => message.send())
+        model.send({ conversation });
       },
     },
     {
@@ -71,7 +71,7 @@ function getMenuOptions(conversation) {
             accuracy: 0.8,
             createdAt: new Date(),
           });
-          model.generateMessage(conversation, message => message.send());
+          model.send({ conversation });
         }
       },
     },
@@ -92,7 +92,7 @@ function getMenuOptions(conversation) {
             author: 'King Arthur'
           })
         });
-        model.generateMessage(conversation, message => message.send());
+        model.send({ conversation });
       },
     },
     {
@@ -121,7 +121,7 @@ function getMenuOptions(conversation) {
             author: 'King Arthur'
           })
         });
-        model.generateMessage(conversation, message => message.send());
+        model.send({ conversation });
       },
     },
     {
@@ -167,7 +167,7 @@ function getMenuOptions(conversation) {
              }),
            ]
        });
-       model.generateMessage(conversation, message => message.send());
+       model.send({ conversation });
       }
     },
     {
@@ -298,7 +298,7 @@ function getMenuOptions(conversation) {
             })
           ]
         })
-        model.generateMessage(conversation, message => message.send());
+        model.send({ conversation });
       },
     },
     {
@@ -314,7 +314,7 @@ function getMenuOptions(conversation) {
              {text:  'What do you mean? African or European swallow?', id: 'just a smart ass'},
            ],
         });
-        model.generateMessage(conversation, message => message.send())
+        model.send({ conversation });
       },
     },
     {
@@ -345,7 +345,7 @@ function getMenuOptions(conversation) {
             })
           ]
         });
-        model.generateMessage(conversation, message => message.send());
+        model.send({ conversation });
       },
     },
     {
@@ -355,7 +355,7 @@ function getMenuOptions(conversation) {
         const model = new StatusModel({
           text: 'You have just received a status message. This could be something important.'
         });
-        model.generateMessage(conversation, message => message.send());
+        model.send({ conversation });
       },
     },
     {
@@ -365,7 +365,7 @@ function getMenuOptions(conversation) {
         const model = new FeedbackModel({
           enabledFor: [layerClient.user.id],
         });
-        model.generateMessage(conversation, message => message.send());
+        model.send({ conversation });
       },
     }
   ];

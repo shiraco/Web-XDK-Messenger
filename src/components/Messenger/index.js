@@ -135,10 +135,11 @@ class Messenger extends Component {
    * Just return `false` to prevent a message from rendering.
    */
   filterMessages (message) {
-    return true;
+    const model = message.createModel();
+    return !model || !(model.getModelName() === 'ResponseModel' && !model.displayModel);
 
     // Uncomment this to hide Response Messages sent by this user
-    // return !(message.getModelName() === 'ResponseModel' && message.sender === layerClient.user);
+    // return !(model.getModelName() === 'ResponseModel' && (message.sender === layerClient.user || !model.displayModel));
   }
 
   /**
@@ -336,7 +337,7 @@ class Messenger extends Component {
 
       <ConversationView
         ref="conversationPanel"
-        queryFilter={() => this.filterMessages()}
+        queryFilter={(message) => this.filterMessages(message)}
         replaceableContent={this.customizeConversationView()}
         onRenderListItem={dateSeparator}
         conversationId={activeConversationId}
